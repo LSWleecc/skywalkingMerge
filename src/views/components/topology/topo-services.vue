@@ -23,10 +23,11 @@
 <script lang="ts">
   import { DurationTime } from '@/types/global';
   import compareObj from '@/utils/comparison';
-  import Axios, { AxiosResponse } from 'axios';
+  import { AxiosResponse } from 'axios';
   import { Component, Vue, Watch } from 'vue-property-decorator';
   import { Action, Getter } from 'vuex-class';
   import TopoSelect from './topo-select.vue';
+  import service from '@/utils/config-service';
 
   @Component({components: {TopoSelect}})
   export default class TopoServices extends Vue {
@@ -36,24 +37,48 @@
     private service = {key: 0, label: 'All services'};
 
     private fetchData() {
-      Axios.post('/graphql', {
-        query: `
-      query queryServices($duration: Duration!) {
-        services: getAllServices(duration: $duration) {
-          key: id
-          label: name
-        }
-      }`,
-        variables: {
-          duration: this.durationTime,
-        },
-      }).then((res: AxiosResponse) => {
-        this.services = res.data.data.services
-          ?
-          [{key: 0, label: 'All services'}, ...res.data.data.services]
-          :
-          [{key: 0, label: 'All services'}];
-      });
+        const queryData = {
+            query: `
+                query queryServices($duration: Duration!) {
+                  services: getAllServices(duration: $duration) {
+                    key: id
+                    label: name
+                  }
+                }`,
+            variables: {
+                duration: this.durationTime,
+            },
+        };
+        service({
+            method: 'post',
+            url: '/graphql',
+            data: queryData
+        }).then((res: AxiosResponse) => {
+            this.services = res.data.data.services
+                ?
+                [{key: 0, label: 'All services'}, ...res.data.data.services]
+                :
+                [{key: 0, label: 'All services'}];
+        })
+
+//      Axios.post('/graphql', {
+//        query: `
+//      query queryServices($duration: Duration!) {
+//        services: getAllServices(duration: $duration) {
+//          key: id
+//          label: name
+//        }
+//      }`,
+//        variables: {
+//          duration: this.durationTime,
+//        },
+//      }).then((res: AxiosResponse) => {
+//        this.services = res.data.data.services
+//          ?
+//          [{key: 0, label: 'All services'}, ...res.data.data.services]
+//          :
+//          [{key: 0, label: 'All services'}];
+//      });
     }
 
     @Watch('durationTime')

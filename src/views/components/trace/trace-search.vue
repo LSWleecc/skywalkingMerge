@@ -24,20 +24,20 @@
           <use xlink:href="#arrow-down"></use>
         </svg>
       </a>
-      <a class="rk-trace-search-btn bg-blue r mr-10" @click="getTraceList">
+      <a class="rk-trace-search-btn bg-blue r mr-10" @click="getSearchList">
         <svg class="icon mr-5 vm">
           <use xlink:href="#search"></use>
         </svg>
         <span class="vm">{{this.$t('search')}}</span>
       </a>
-      <a class="rk-trace-clear-btn r mr-10" @click="clearSearch">
-        <svg class="icon mr-5 vm">
-          <use xlink:href="#clear"></use>
-        </svg>
-        <span class="vm">{{this.$t('clear')}}</span>
-      </a>
+      <!--<a class="rk-trace-clear-btn r mr-10" @click="clearSearch">-->
+        <!--<svg class="icon mr-5 vm">-->
+          <!--<use xlink:href="#clear"></use>-->
+        <!--</svg>-->
+        <!--<span class="vm">{{this.$t('clear')}}</span>-->
+      <!--</a>-->
       <div class="flex-h">
-        <TraceSelect :hasSearch="true" :title="this.$t('service')" :value="service" @input="chooseService"
+        <TraceSelect :hasSearch="true" :title="this.$t('service')" :value="rocketTrace.currentService" @input="chooseService"
                      :data="rocketTrace.services" :readonly="inTopo"/>
         <TraceSelect :hasSearch="true" :title="this.$t('instance')" v-model="instance" :data="rocketTrace.instances"/>
         <TraceSelect :title="this.$t('status')" :value="traceState" @input="chooseStatus"
@@ -87,13 +87,17 @@
     @Action('rocketTrace/GET_TRACELIST') private GET_TRACELIST: any;
     @Action('rocketTrace/SET_TRACE_FORM') private SET_TRACE_FORM: any;
     @Mutation('rocketTrace/SET_TRACE_FORM_ITEM') private SET_TRACE_FORM_ITEM: any;
+    @Mutation('rocketTrace/SET_INIT_SERVICE') private SET_INIT_SERVICE: any;
+    @Mutation('rocketTrace/SET_TRACELIST') private SET_TRACELIST: any;
+    @Mutation('rocketTrace/SET_TRACE_SPANS') private SET_TRACE_SPANS: any;
 
     private time!: Date[];
     private status: boolean = true;
     private maxTraceDuration: string = localStorage.getItem('maxTraceDuration') || '';
     private minTraceDuration: string = localStorage.getItem('minTraceDuration') || '';
-    @Prop({default: {label: 'All', key: ''}})
-    private service!: Option;
+//    @Prop({default: {label: 'All', key: ''}})
+//    private service!: Option;
+    private service: Option = {label: 'All', key: ''};
     private instance: Option = {label: 'All', key: ''};
     private endpointName: string = localStorage.getItem('endpointName') || '';
     private traceId: string = localStorage.getItem('traceId') || '';
@@ -153,11 +157,15 @@
     }
 
     private chooseService(i: any) {
-      if (this.service.key === i.key) {
-        return;
+//      if (this.service.key === i.key) {
+//        return;
+//      }
+      if(this.rocketTrace.currentService.key === i.key) {
+          return
       }
       this.instance = {label: 'All', key: ''};
-      this.service = i;
+//      this.service = i;
+      this.SET_INIT_SERVICE(i);
       if (i.key === '') {
         return;
       }
@@ -168,48 +176,58 @@
       this.traceState = i;
     }
 
-    private getTraceList() {
-      this.GET_SERVICES({duration: this.durationTime});
-      const temp: any = {
-        queryDuration: this.globalTimeFormat([
-          new Date(this.time[0].getTime() +
-            (parseInt(this.rocketbotGlobal.utc, 10) + new Date().getTimezoneOffset() / 60) * 3600000),
-          new Date(this.time[1].getTime() +
-            (parseInt(this.rocketbotGlobal.utc, 10) + new Date().getTimezoneOffset() / 60) * 3600000),
-        ]),
-        traceState: this.traceState.key,
-        paging: {pageNum: 1, pageSize: 15, needTotal: true},
-        queryOrder: this.rocketTrace.traceForm.queryOrder,
-      };
+    private getSearchList() {
+        this.$eventBus.$emit('SET_LOADING_TRUE');
+        const temp: any = {
+            queryDuration: this.globalTimeFormat([
+                new Date(this.time[0].getTime() +
+                    (parseInt(this.rocketbotGlobal.utc, 10) + new Date().getTimezoneOffset() / 60) * 3600000),
+                new Date(this.time[1].getTime() +
+                    (parseInt(this.rocketbotGlobal.utc, 10) + new Date().getTimezoneOffset() / 60) * 3600000),
+            ]),
+            traceState: this.traceState.key,
+            paging: {pageNum: 1, pageSize: 15, needTotal: true},
+            queryOrder: this.rocketTrace.traceForm.queryOrder,
+        };
 
-      if (this.service.key) {
-        temp.serviceId = this.service.key;
-      }
-      if (this.instance.key) {
-        temp.serviceInstanceId = this.instance.key;
-      }
-      if (this.maxTraceDuration) {
-        temp.maxTraceDuration = this.maxTraceDuration;
-        localStorage.setItem('maxTraceDuration', this.maxTraceDuration);
-      }
-      if (this.minTraceDuration) {
-        temp.minTraceDuration = this.minTraceDuration;
-        localStorage.setItem('minTraceDuration', this.minTraceDuration);
-      }
-      if (this.endpointName) {
-        temp.endpointName = this.endpointName;
-        localStorage.setItem('endpointName', this.endpointName);
-      }
-      if (this.traceId) {
-        temp.traceId = this.traceId;
-        localStorage.setItem('traceId', this.traceId);
-      }
-      this.SET_TRACE_FORM(temp);
-      this.$eventBus.$emit('SET_LOADING_TRUE', () => {
+        if(this.rocketTrace.currentService && this.rocketTrace.currentService.key) {
+            temp.serviceId = this.rocketTrace.currentService.key
+        }
+        if (this.instance.key) {
+            temp.serviceInstanceId = this.instance.key;
+        }
+        if (this.maxTraceDuration) {
+            temp.maxTraceDuration = this.maxTraceDuration;
+            localStorage.setItem('maxTraceDuration', this.maxTraceDuration);
+        }
+        if (this.minTraceDuration) {
+            temp.minTraceDuration = this.minTraceDuration;
+            localStorage.setItem('minTraceDuration', this.minTraceDuration);
+        }
+        if (this.endpointName) {
+            temp.endpointName = this.endpointName;
+            localStorage.setItem('endpointName', this.endpointName);
+        }
+        if (this.traceId) {
+            temp.traceId = this.traceId;
+            localStorage.setItem('traceId', this.traceId);
+        }
+        this.SET_TRACE_FORM(temp);
         this.GET_TRACELIST().then(() => {
-          this.$eventBus.$emit('SET_LOADING_FALSE');
+            this.$eventBus.$emit('SET_LOADING_FALSE');
         });
-      });
+    }
+
+    private getTraceList() {
+        this.$eventBus.$emit('SET_LOADING_TRUE',async () => {
+            this.SET_TRACELIST([]);
+            this.SET_TRACE_SPANS([]);
+            await this.GET_SERVICES({duration: this.durationTime});
+            if(this.rocketTrace.currentService && this.rocketTrace.currentService.key) {
+                this.GET_INSTANCES({duration: this.durationTime, serviceId: this.rocketTrace.currentService.key})
+            }
+            this.getSearchList()
+        });
     }
 
     private clearSearch() {
@@ -243,9 +261,6 @@
 
     private mounted() {
       this.getTraceList();
-      if (this.service && this.service.key) {
-        this.GET_INSTANCES({duration: this.durationTime, serviceId: this.service.key});
-      }
     }
   }
 </script>

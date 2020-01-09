@@ -67,24 +67,24 @@ export default class Login extends Vue {
       // Here is the business logic of the login, call its own login interface to write the return value to localstorage
       // Modify the beforeEach service in src/router/index.js to determine.
       // if there is a correct defined value. example：skywalking-authority
-  private login() {
-    if (process.env.NODE_ENV === 'development') {
-      if (this.accountInfo.userName === 'admin' && this.accountInfo.password === 'admin') {
-        window.localStorage.setItem('skywalking-authority', 'admin');
-      } else {
-        this.error = true;
-        return;
-      }
-      this.$router.push('/');
-    } else {
-      axios.post('/login/account', this.accountInfo).then((res: AxiosResponse) => {
-        window.localStorage.setItem('skywalking-authority', res.data.currentAuthority);
-        this.$router.push('/');
-      }).catch(() => {
-         this.error = true;
-      });
-    }
-  }
+//  private login() {
+//    if (process.env.NODE_ENV === 'development') {
+//      if (this.accountInfo.userName === 'admin' && this.accountInfo.password === 'admin') {
+//        window.localStorage.setItem('skywalking-authority', 'admin');
+//      } else {
+//        this.error = true;
+//        return;
+//      }
+//      this.$router.push('/');
+//    } else {
+//      axios.post('/login/account', this.accountInfo).then((res: AxiosResponse) => {
+//        window.localStorage.setItem('skywalking-authority', res.data.currentAuthority);
+//        this.$router.push('/');
+//      }).catch(() => {
+//         this.error = true;
+//      });
+//    }
+//  }
 // ======================================================
 }
 </script>

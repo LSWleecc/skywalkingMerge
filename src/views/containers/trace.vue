@@ -17,7 +17,7 @@
 
 <template>
   <div class="rk-trace flex-v">
-    <TraceSearch :service="service" :inTopo="inTopo"/>
+    <TraceSearch :inTopo="inTopo"/>
     <div class="rk-trace-inner">
       <TraceTable/>
       <TraceDetail :current="stateTrace.currentTrace" :spans="stateTrace.traceSpans"/>
@@ -44,8 +44,8 @@ export default class Trace extends Vue {
   @Action('rocketTrace/GET_TRACELIST') private GET_TRACELIST: any;
   @Action('rocketTrace/GET_TRACE_SPANS') private GET_TRACE_SPANS: any;
 
-  @Prop({default: {label: 'All', key: ''}})
-  private service!: Option;
+//  @Prop({default: {label: 'All', key: ''}})
+//  private service!: Option;
 
   @Prop({default: false, type: Boolean})
   private inTopo!: boolean;

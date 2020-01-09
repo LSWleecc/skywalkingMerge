@@ -21,6 +21,7 @@ import * as option from './query/option';
 import * as trace from './query/trace';
 import * as topology from './query/topology';
 import * as alarm from './query/alarm';
+import service from '../utils/config-service';
 
 const query: any = {
   ...option,
@@ -35,12 +36,24 @@ class Graph {
     this.queryData = queryData;
     return this;
   }
-  public params(variablesData: any): AxiosPromise<void> {
-    return axios.post('/graphql', {
-      query: query[this.queryData],
-      variables: variablesData,
-    }, { cancelToken: cancelToken() });
-  }
+  // public params(variablesData: any): AxiosPromise<void> {
+  //   return axios.post('/graphql', {
+  //     query: query[this.queryData],
+  //     variables: variablesData,
+  //   }, { cancelToken: cancelToken() });
+  // }
+    public params(variablesData: any): AxiosPromise<void> {
+        const data = {
+            query: query[this.queryData],
+            variables: variablesData,
+        };
+        return service({
+            method: 'post',
+            url: '/graphql',
+            data:  data,
+            cancelToken: cancelToken()
+        });
+    }
 }
 
 export default new Graph();

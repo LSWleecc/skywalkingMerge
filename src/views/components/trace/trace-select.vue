@@ -46,7 +46,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 @Component
 export default class TraceSelect extends Vue {
   @Prop() public data!: any;
-  @Prop() public value!: any;
+  @Prop({default:() => ({key: '', label: ''})}) public value: any;
   @Prop() public title!: string;
   @Prop({default: false}) public hasSearch!: boolean;
   @Prop({default: false})

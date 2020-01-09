@@ -80,14 +80,14 @@ export default [
     w: 3,
     h: 170,
   },
-  {
-    o: 'Global',
-    d: 'globalPercent',
-    c: 'ChartLine',
-    t: 'Global Response Time Percentile',
-    w: 3,
-    h: 250,
-  },
+  // {
+  //   o: 'Global',
+  //   d: 'globalPercent',
+  //   c: 'ChartLine',
+  //   t: 'Global Response Time Percentile',
+  //   w: 3,
+  //   h: 250,
+  // },
   {
     o: 'Service',
     d: 'servicePercent',

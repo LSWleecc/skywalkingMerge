@@ -17,14 +17,6 @@
 
 export default [
   {
-    o: 'Global',
-    d: 'globalBrief',
-    c: 'ChartBrief',
-    t: 'Global Brief',
-    w: 3,
-    h: 250,
-  },
-  {
     o: 'ServiceEndpoint',
     d: 'endpointResponseTime',
     c: 'ChartNum',
@@ -73,14 +65,6 @@ export default [
     h: 170,
   },
   {
-    o: 'Global',
-    d: 'globalPercent',
-    c: 'ChartLine',
-    t: 'Global Response Time Percentile',
-    w: 3,
-    h: 250,
-  },
-  {
     o: 'ServiceEndpoint',
     d: 'endpointPercent',
     c: 'ChartLine',
@@ -93,14 +77,6 @@ export default [
     d: 'endpointTopology',
     c: 'ChartSankey',
     t: 'Dependency Map',
-    w: 6,
-    h: 250,
-  },
-  {
-    o: 'Global',
-    d: 'globalSlow',
-    c: 'ChartSlow',
-    t: 'Global Top Slow Endpoint',
     w: 6,
     h: 250,
   },

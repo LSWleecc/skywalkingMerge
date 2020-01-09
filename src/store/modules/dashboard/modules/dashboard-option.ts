@@ -90,13 +90,14 @@ const mutations: MutationTree<State> = {
   },
   [types.SET_INSTANCES](state: State, data: any) {
     state.instances = data;
-    if (!data.length) {
-      state.currentInstance = {};
-      return;
-    }
-    if (!state.currentInstance.key && data.length) {
-      state.currentInstance = data[0];
-    }
+    state.currentInstance = {};
+    // if (!data.length) {
+    //   state.currentInstance = {};
+    //   return;
+    // }
+    // if (!state.currentInstance.key && data.length) {
+    //   state.currentInstance = data[0];
+    // }
   },
   [types.SET_CURRENT_INSTANCE](state: State, instance: any) {
     state.currentInstance = instance;

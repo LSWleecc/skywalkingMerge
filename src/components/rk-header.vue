@@ -18,10 +18,10 @@
 <template>
   <header class="rk-header flex-h">
     <div class="flex-h">
-      <svg class="svg-logo icon" style="margin-right:35px;margin-top:-5px">
-        <use xlink:href="#logo-sw"></use>
-      </svg>
-      <span class="grey rocketbot">Rocketbot</span>
+      <!--<svg class="svg-logo icon" style="margin-right:35px;margin-top:-5px">-->
+        <!--<use xlink:href="#logo-sw"></use>-->
+      <!--</svg>-->
+      <!--<span class="grey rocketbot">Rocketbot</span>-->
       <router-link class="nav-link mr-20" to="/" exact>
         <svg class="icon sm vm">
           <use xlink:href="#chart"></use>

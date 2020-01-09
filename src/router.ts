@@ -24,6 +24,7 @@ import Trace from './views/containers/trace.vue';
 import Topology from './views/containers/topology.vue';
 import Alarm from './views/containers/alarm.vue';
 import Comparison from './views/containers/comparison.vue';
+import auth from '@/utils/auth';
 
 Vue.use(Router);
 window.axiosCancel = [];
@@ -31,6 +32,7 @@ window.axiosCancel = [];
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
+  isGoNext: false,
   linkActiveClass: 'active',
   routes: [
     // {
@@ -68,7 +70,18 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  const token = window.localStorage.getItem('skywalking-authority');
+    window.onmessage = (event: any) => {
+        if (event.source !== window.parent) {
+            return;
+        } else {
+            auth.saveToken(event.data);
+            router.isGoNext = true;
+            next()
+        }
+    };
+    if(router.isGoNext){
+        next()
+    }
   if (window.axiosCancel.length !== 0) {
     for (const func of  window.axiosCancel) {
       setTimeout(func(), 0);

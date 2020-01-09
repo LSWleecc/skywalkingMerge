@@ -166,9 +166,6 @@
 
     private beforeDestroy() {
       window.removeEventListener('resize', this.resize);
-      this.CLEAR_TOPO_INFO();
-      this.CLEAR_TOPO();
-      this.$store.unregisterModule('rocketTopo');
     }
 
     get types() {

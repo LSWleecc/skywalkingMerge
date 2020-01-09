@@ -30,6 +30,7 @@ export interface State {
   traceTotal: number;
   traceSpans: Span[];
   currentTrace: Trace;
+  currentService: any;
 }
 
 const initState: State = {
@@ -50,6 +51,7 @@ const initState: State = {
     start: '',
     traceIds: [],
   },
+  currentService: {key: '', label: ''}
 };
 
 // getters
@@ -58,7 +60,10 @@ const getters = {};
 // mutations
 const mutations: MutationTree<State> = {
   [types.SET_SERVICES](state: State, data: Option[]): void {
-    state.services = [{label: 'All', key: ''}].concat(data);
+    state.services = data;
+  },
+  [types.SET_INIT_SERVICE](state: State, data:any){
+    state.currentService = data;
   },
   [types.SET_INSTANCES](state: State, data: Option[]): void {
     state.instances = [{label: 'All', key: ''}].concat(data);
@@ -117,6 +122,7 @@ const actions: ActionTree<State, any> = {
       .params(params)
       .then((res: AxiosResponse) => {
         context.commit(types.SET_SERVICES, res.data.data.services);
+        context.commit(types.SET_INIT_SERVICE, res.data.data.services[0])
       });
   },
   GET_INSTANCES(context: { commit: Commit }, params: any): Promise<void> {

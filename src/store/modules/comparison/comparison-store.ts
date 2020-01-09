@@ -17,7 +17,7 @@
 
 import { Commit, ActionTree, Dispatch } from 'vuex';
 import axios, { AxiosResponse } from 'axios';
-
+import service from '@/utils/config-service';
 import graph from '@/graph';
 import { cancelToken } from '@/utils/cancelToken';
 import * as types from '../../mutation-types';
@@ -513,16 +513,32 @@ const actions: ActionTree<State, ActionsParamType> = {
       };
       queryVal = context.getters.queryNextValue;
     }
-    return axios.post('/graphql', {
-      query: queryVal,
-      variables: variablesData,
-    }, {cancelToken: cancelToken()}).then((res: AxiosResponse<any>) => {
-        const data = res.data.data;
-        if (!data) {
-          return;
-        }
-        context.dispatch('FORMAT_VALUE', {value: data, type: param.type});
-    });
+      const paramsData = {
+          query: queryVal,
+          variables: variablesData,
+      }
+      return service({
+          method: 'post',
+          url: '/graphql',
+          data: paramsData,
+          cancelToken: cancelToken()
+      }).then((res: AxiosResponse<any>) => {
+          const data = res.data.data;
+          if (!data) {
+              return;
+          }
+          context.dispatch('FORMAT_VALUE', {value: data, type: param.type});
+      })
+    // return axios.post('/graphql', {
+    //   query: queryVal,
+    //   variables: variablesData,
+    // }, {cancelToken: cancelToken()}).then((res: AxiosResponse<any>) => {
+    //     const data = res.data.data;
+    //     if (!data) {
+    //       return;
+    //     }
+    //     context.dispatch('FORMAT_VALUE', {value: data, type: param.type});
+    // });
   },
   FORMAT_VALUE(context: {commit: Commit, state: State, dispatch: Dispatch}, params: {value: any, type: string}) {
     if (!(params && params.value)) {

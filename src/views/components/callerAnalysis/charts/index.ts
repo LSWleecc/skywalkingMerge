@@ -15,29 +15,28 @@
  * limitations under the License.
  */
 
-<template>
-  <RkDate class="mr-10" v-model="time" position="top" format="YYYY-MM-DD HH:mm:ss"/>
-</template>
-
-<script lang="ts">
-import timeFormat from '@/utils/timeFormat';
+import ChartBrief from './chart-brief.vue';
+import ChartNum from './chart-num.vue';
+import ChartLine from './chart-line.vue';
+import ChartBar from './chart-bar.vue';
+import ChartHeatmap from './chart-heatmap.vue';
+import ChartSlow from './chart-slow.vue';
+import ChartTrace from './chart-trace.vue';
+import ChartSankey from './chart-sankey.vue';
+import ChartInstance from './chart-instance.vue';
+import ChartCount from './chart-count.vue';
+import ChartEdit from './chart-edit.vue';
 
 export default {
-  computed: {
-    time: {
-      get() {
-        const that: any = this;
-        return [that.$store.state.rocketbot.durationRow.start, that.$store.state.rocketbot.durationRow.end];
-      },
-      set(val: Date[]) {
-        const that: any = this;
-        console.log(val,'kkk')
-        that.$store.dispatch('SET_DURATION', timeFormat(val));
-      },
-    },
-  },
+  ChartCount,
+  ChartNum,
+  ChartBrief,
+  ChartLine,
+  ChartBar,
+  ChartInstance,
+  ChartHeatmap,
+  ChartSlow,
+  ChartTrace,
+  ChartSankey,
+  ChartEdit,
 };
-</script>
-
-<style scoped>
-</style>

@@ -218,8 +218,8 @@
         });
     }
 
-    private getTraceList() {
-        this.$eventBus.$emit('SET_LOADING_TRUE',async () => {
+    private async getService () {
+        try {
             this.SET_TRACELIST([]);
             this.SET_TRACE_SPANS([]);
             await this.GET_SERVICES({duration: this.durationTime});
@@ -227,6 +227,14 @@
                 this.GET_INSTANCES({duration: this.durationTime, serviceId: this.rocketTrace.currentService.key})
             }
             this.getSearchList()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    private getTraceList() {
+        this.$eventBus.$emit('SET_LOADING_TRUE',async () => {
+
         });
     }
 

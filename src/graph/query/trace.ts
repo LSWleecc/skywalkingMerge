@@ -25,3 +25,18 @@ export const queryTrace =
 
 export const queryServiceInstance =
   `query queryServiceInstance(${ServiceInstanceOption.variable}) {${ServiceInstanceOption.query}}`;
+
+export const queryDependencyEndpoint = `
+query getDependencyEndpoint($endpointId: ID!, $duration: Duration!, $order: Order!, $paging: Pagination!) {
+        getDependencyEndpoints(endpointId: $endpointId, duration: $duration, order: $order, paging: $paging) {
+            entities {
+                name
+                id
+                value
+                serviceName
+                serviceId
+            }
+            total
+        }
+}
+`;

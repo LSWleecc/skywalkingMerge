@@ -15,29 +15,16 @@
  * limitations under the License.
  */
 
-<template>
-  <RkDate class="mr-10" v-model="time" position="top" format="YYYY-MM-DD HH:mm:ss"/>
-</template>
-
-<script lang="ts">
-import timeFormat from '@/utils/timeFormat';
-
-export default {
-  computed: {
-    time: {
-      get() {
-        const that: any = this;
-        return [that.$store.state.rocketbot.durationRow.start, that.$store.state.rocketbot.durationRow.end];
-      },
-      set(val: Date[]) {
-        const that: any = this;
-        console.log(val,'kkk')
-        that.$store.dispatch('SET_DURATION', timeFormat(val));
-      },
-    },
-  },
+export const globalPercent =  {
+  variable: ['$duration: Duration!', '$id: ID!', '$valueCName: String'],
+  fragment: `
+  times: getLinearIntValues(metric: {
+    name: "endpoint_relation_client_resp_time"
+    id: $id
+  }, duration: $duration, valueCName: $valueCName) { 
+      values { 
+        id
+        value
+     } }`,
 };
-</script>
 
-<style scoped>
-</style>

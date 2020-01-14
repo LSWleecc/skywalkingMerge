@@ -14,30 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { Value } from '@/types/dashboard';
 
-<template>
-  <RkDate class="mr-10" v-model="time" position="top" format="YYYY-MM-DD HH:mm:ss"/>
-</template>
+export interface State {
+  globalPercent: {
+    times: number[]
+  };
+}
 
-<script lang="ts">
-import timeFormat from '@/utils/timeFormat';
-
-export default {
-  computed: {
-    time: {
-      get() {
-        const that: any = this;
-        return [that.$store.state.rocketbot.durationRow.start, that.$store.state.rocketbot.durationRow.end];
-      },
-      set(val: Date[]) {
-        const that: any = this;
-        console.log(val,'kkk')
-        that.$store.dispatch('SET_DURATION', timeFormat(val));
-      },
-    },
-  },
+export const initState: State = {
+  globalPercent: {
+    times: []
+  }
 };
-</script>
 
-<style scoped>
-</style>
+
+export const SetGlobal = (state: State, params: any) => {
+  if (params && params.times ) {
+    state.globalPercent.times = params.times.values.map((i: Value) => i.value);
+  }
+
+};

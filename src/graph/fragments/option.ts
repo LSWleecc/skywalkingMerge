@@ -63,3 +63,27 @@ export const OAPTimeInfo = {
       currentTimestamp
     }
   `};
+
+export const ServiceList = {
+    variable: '$endpointId: ID!, $duration: Duration!, $order: Order!, $paging: Pagination!',
+    query: `
+       getConsumerServices(endpointId: $endpointId, duration: $duration, order: $order, paging: $paging) {
+            entities {
+                name
+                id
+                value
+            }
+            total
+        }
+`};
+
+export const ServiceChartList = {
+    variable: '$endpointId: ID!, $duration: Duration!, $serviceId: ID!',
+    query: `
+        getConsumerServiceCalls(endpointId: $endpointId, duration: $duration, serviceId: $serviceId) {
+            values {
+                id
+                value
+            }
+        }
+    `};

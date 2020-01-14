@@ -28,6 +28,18 @@
         </svg>
         <span class="vm hide-xs ml-5">{{this.$t('dashboard')}}</span>
       </router-link>
+      <router-link class="nav-link mr-20" to="/calleranalysis">
+        <svg class="icon sm vm">
+          <use xlink:href="#merge"></use>
+        </svg>
+        <span class="vm hide-xs ml-5">{{this.$t('callerAnalysis')}}</span>
+      </router-link>
+      <router-link class="nav-link mr-20" to="/dependencyanalysis">
+        <svg class="icon sm vm">
+          <use xlink:href="#merge"></use>
+        </svg>
+        <span class="vm hide-xs ml-5">{{this.$t('dependencyAlanysis')}}</span>
+      </router-link>
       <router-link class="nav-link mr-20" to="/topology">
         <svg class="icon sm vm">
           <use xlink:href="#issues"></use>

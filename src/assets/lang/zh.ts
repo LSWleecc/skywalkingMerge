@@ -106,6 +106,8 @@ const m = {
   metrics: '指标',
   ShowInstanceDependency: '展示实例依赖',
   InstanceDependencyTitle: '实例依赖',
+  callerAnalysis: '调用方分析',
+  dependencyAlanysis: '依赖方分析'
 };
 
 export default m;

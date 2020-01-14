@@ -24,6 +24,8 @@ import Trace from './views/containers/trace.vue';
 import Topology from './views/containers/topology.vue';
 import Alarm from './views/containers/alarm.vue';
 import Comparison from './views/containers/comparison.vue';
+import CallerAnalysis from './views/containers/callerAnalysis.vue'
+import dependencyAnalysis from './views/containers/dependencyAnalysis.vue'
 import auth from '@/utils/auth';
 
 Vue.use(Router);
@@ -47,6 +49,14 @@ const router = new Router({
         {
           path: '',
           component: Dashboard,
+        },
+        {
+          path: 'calleranalysis',
+          component: CallerAnalysis
+        },
+        {
+          path: 'dependencyanalysis',
+          component: dependencyAnalysis
         },
         {
           path: 'trace',

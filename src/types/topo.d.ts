@@ -83,3 +83,9 @@ export interface Span {
   start: string;
   traceIds: string[];
 }
+
+export interface caller {
+    name: string;
+    id: string;
+    value: number;
+}

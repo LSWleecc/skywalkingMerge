@@ -15,29 +15,9 @@
  * limitations under the License.
  */
 
-<template>
-  <RkDate class="mr-10" v-model="time" position="top" format="YYYY-MM-DD HH:mm:ss"/>
-</template>
+import * as global from './global';
 
-<script lang="ts">
-import timeFormat from '@/utils/timeFormat';
 
 export default {
-  computed: {
-    time: {
-      get() {
-        const that: any = this;
-        return [that.$store.state.rocketbot.durationRow.start, that.$store.state.rocketbot.durationRow.end];
-      },
-      set(val: Date[]) {
-        const that: any = this;
-        console.log(val,'kkk')
-        that.$store.dispatch('SET_DURATION', timeFormat(val));
-      },
-    },
-  },
+  ...global,
 };
-</script>
-
-<style scoped>
-</style>

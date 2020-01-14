@@ -20,7 +20,8 @@ import { Duration, DurationTime } from '@/types/global';
 import getDurationRow from '@/utils/datetime';
 import getLocalTime from '@/utils/localtime';
 import Vue from 'vue';
-import { ActionTree, Commit, MutationTree } from 'vuex';
+import {ActionTree, Commit, Dispatch, MutationTree} from 'vuex';
+import timeFormat from "@/utils/timeFormat";
 
 let timer: any = null;
 
@@ -193,6 +194,12 @@ const mutations: MutationTree<State> = {
 
 // actions
 const actions: ActionTree<State, any> = {
+  SET_NEW_DURATION(context: {commit: Commit, dispatch: Dispatch, getters: any}): void{
+    const gap = context.getters.duration.end.getTime() - context.getters.duration.start.getTime();
+    const utcCopy: any = -(new Data().getTimezoneOffset() / 60);
+    const time: Date[] = [new Date(new Date().getTime() - gap), new Date()]
+    context.commit(types.SET_DURATION, timeFormat(time))
+  },
   SET_UTC(context: { commit: Commit }, data: number): void {
     context.commit(types.SET_UTC, data);
     context.commit(types.RUN_EVENTS);

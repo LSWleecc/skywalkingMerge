@@ -11,11 +11,11 @@
 
     <div class="rk-dashboard-item-body" v-if="current.name && isShow">
       <div class="dashboard-container clear">
-        <InvokItem
+        <CallerItem
           v-for="(i, index) in callerStore.invokChartList" v-if="callerStore.invokChartList.length" :key="index" :index="index"
           :rocketGlobal="rocketGlobal" :i="i" :dragIndex="dragIndex"
           @dragStart="dragStart">
-        </InvokItem>
+        </CallerItem>
       </div>
       <!--<component :is="'ChartLine'" ref="chart" :i="chartList[0]" :intervalTime="intervalTime" :data="current.serviceCallData"></component>-->
     </div>
@@ -55,13 +55,13 @@
             this.dragIndex = index;
         }
         private created() {
-            this.$eventBus.$on('SET_INVOK_LOADING_SHOW', this, (cb: any) => {
+            this.$eventBus.$on('SET_CALLER_LOADING_SHOW', this, (cb: any) => {
                 this.isShow = true;
                 if (cb) {
                     cb();
                 }
             });
-            this.$eventBus.$on('SET_INVOK_LOADING_HIDDEN', this, (cb: any) => {
+            this.$eventBus.$on('SET_CALLER_LOADING_HIDDEN', this, (cb: any) => {
                 this.isShow = false;
                 if (cb) {
                     cb();

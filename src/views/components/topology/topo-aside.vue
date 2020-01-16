@@ -182,7 +182,7 @@
 
     @Watch('durationTime')
     private watchDurationTime() {
-      this.getTopo();
+//      this.getTopo();
     }
 
     private showRadial() {

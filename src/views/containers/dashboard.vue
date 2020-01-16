@@ -58,6 +58,7 @@ export default class Dashboard extends Vue {
   @Mutation('SET_COMPS_TREE') private SET_COMPS_TREE: any;
   @Mutation('SET_CURRENT_COMPS') private SET_CURRENT_COMPS: any;
   @Action('MIXHANDLE_GET_OPTION') private MIXHANDLE_GET_OPTION: any;
+  @Action('SET_NEW_DURATION') private SET_NEW_DURATION: any;
   @Action('GET_QUERY') private GET_QUERY: any;
   @Getter('durationTime') private durationTime: any;
   private isRouterAlive: boolean = true;
@@ -94,6 +95,7 @@ export default class Dashboard extends Vue {
       const data: string = `${window.localStorage.getItem('dashboard')}`;
       this.SET_COMPS_TREE(JSON.parse(data));
     }
+    this.SET_NEW_DURATION();
     this.handleOption();
     this.SET_EVENTS([this.handleRefresh]);
   }

@@ -232,11 +232,11 @@ const actions: ActionTree<State, any> = {
             })
     },
     SELECT_SERVICE(context: { commit: Commit, dispatch: Dispatch }, params: any) {
-        context.commit('SET_CURRENTINVOK_SERVICE', params.service);
+        context.commit('SET_CURRENTCALLER_SERVICE', params.service);
         context.dispatch('GET_SERVICE_ENDPOINTS')
     },
     SELECT_ENDPOINT(context: { commit: Commit, dispatch: Dispatch, state: any }, params: any) {
-        context.commit('SET_CURRENTINVOK_ENDPOINT', params.endpoint);
+        context.commit('SET_CURRENTCALLER_ENDPOINT', params.endpoint);
     },
     GET_QUERY(context: { commit: Commit, dispatch: Dispatch, getters: any }, variablesData: any): Promise<void> {
         return graph

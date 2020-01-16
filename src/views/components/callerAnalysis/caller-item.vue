@@ -9,7 +9,7 @@
     </div>
     <div class="rk-dashboard-item-body">
       <div style="height:100%;">
-        <component :is="i.c" ref="chart" :i="i" :index="index" :intervalTime="intervalTime" :data="DependTrace[i.d]"></component>
+        <component :is="i.c" ref="chart" :i="i" :index="index" :intervalTime="intervalTime" :data="callerStore[i.d]"></component>
         <!--<component :is="rocketGlobal.edit ? 'ChartEdit' : i.c" ref="chart" :i="i" :index="index" :intervalTime="intervalTime" :data="DependTrace[i.d]"></component>-->
       </div>
     </div>

@@ -68,9 +68,9 @@
         private selectCurrentTrace(i: any) {
             this.SET_CURRENT_TRACE(i);
             this.selectedKey = i.id;
-            this.$eventBus.$emit('SET_INVOK_LOADING_HIDDEN', () => {
+            this.$eventBus.$emit('SET_CALLER_LOADING_HIDDEN', () => {
                 this.handleRefresh().then(() => {
-                    this.$eventBus.$emit('SET_INVOK_LOADING_SHOW')
+                    this.$eventBus.$emit('SET_CALLER_LOADING_SHOW')
                 })
             });
         }
@@ -89,13 +89,13 @@
         }
 
         private created() {
-            this.$eventBus.$on('SET_INVOK_LOADING_TRUE', this, (cb: any) => {
+            this.$eventBus.$on('SET_CALLER_LOADING_TRUE', this, (cb: any) => {
                 this.loading = true;
                 if (cb) {
                     cb();
                 }
             });
-            this.$eventBus.$on('SET_INVOK_LOADING_FALSE', this, (data: any) => {
+            this.$eventBus.$on('SET_CALLER_LOADING_FALSE', this, (data: any) => {
                 this.loading = false;
             });
         }

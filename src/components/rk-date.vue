@@ -26,12 +26,12 @@
     <div class="datepicker-popup" :class="[popupClass,{'datepicker-inline':type==='inline'},position==='top'?'top':'bottom']" tabindex="-1" v-if="show||type==='inline'">
       <template v-if="range">
         <div class="datepicker-popup__sidebar">
-          <button type="button" class="datepicker-popup__shortcut" @click="quickPick('quarter')">{{this.local.quarterHourCutTip}}</button>
-          <button type="button" class="datepicker-popup__shortcut" @click="quickPick('half')">{{this.local.halfHourCutTip}}</button>
-          <button type="button" class="datepicker-popup__shortcut" @click="quickPick('hour')">{{this.local.hourCutTip}}</button>
-          <button type="button" class="datepicker-popup__shortcut" @click="quickPick('day')">{{this.local.dayCutTip}}</button>
-          <button type="button" class="datepicker-popup__shortcut" @click="quickPick('week')">{{this.local.weekCutTip}}</button>
-          <button type="button" class="datepicker-popup__shortcut" @click="quickPick('month')">{{this.local.monthCutTip}}</button>
+          <button type="button" :class="whichDuration === 'quarter' ? 'isActive':''" class="datepicker-popup__shortcut" @click="quickPick('quarter')">{{this.local.quarterHourCutTip}}</button>
+          <button type="button" :class="whichDuration === 'half' ? 'isActive':''" class="datepicker-popup__shortcut" @click="quickPick('half')">{{this.local.halfHourCutTip}}</button>
+          <button type="button" :class="whichDuration === 'hour' ? 'isActive':''" class="datepicker-popup__shortcut" @click="quickPick('hour')">{{this.local.hourCutTip}}</button>
+          <button type="button" :class="whichDuration === 'day' ? 'isActive':''" class="datepicker-popup__shortcut" @click="quickPick('day')">{{this.local.dayCutTip}}</button>
+          <button type="button" :class="whichDuration === 'week' ? 'isActive':''" class="datepicker-popup__shortcut" @click="quickPick('week')">{{this.local.weekCutTip}}</button>
+          <button type="button" :class="whichDuration === 'month' ? 'isActive':''" class="datepicker-popup__shortcut" @click="quickPick('month')">{{this.local.monthCutTip}}</button>
         </div>
         <div class="datepicker-popup__body">
           <rk-calendar v-model="dates[0]" :left="true"></rk-calendar>
@@ -96,6 +96,7 @@ export default {
     return {
       show: false,
       dates: [],
+      whichDuration: '',
     };
   },
   computed: {
@@ -141,6 +142,36 @@ export default {
     value() {
       this.dates = this.vi(this.value);
     },
+    dates(oldValue, newValue) {
+      let timeDuration;
+      if(oldValue.length) {
+        timeDuration = oldValue[1].getTime() - oldValue[0].getTime();
+      }
+      switch (timeDuration) {
+        case 900000:
+          this.whichDuration = 'quarter';
+          break;
+        case 1800000:
+          this.whichDuration = 'half';
+          break;
+        case 3600000:
+          this.whichDuration = 'hour';
+          break;
+        case 86400000:
+          this.whichDuration = 'day';
+          break;
+        case 604800000:
+          this.whichDuration = 'week';
+          break;
+        case 2592000000:
+          this.whichDuration = 'month';
+          break;
+        default:
+          this.whichDuration = '';
+          break
+      }
+    }
+
   },
   methods: {
     get() {
@@ -439,7 +470,9 @@ export default {
   padding: 5px 15px;
   color: #ffffff;
 }
-
+.isActive {
+  color: #3f97e3;
+}
 .datepicker__buttons .datepicker__button-select {
   background: #3f97e3;
 }

@@ -24,7 +24,7 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-  import { State, Getter, Mutation } from 'vuex-class';
+  import { State, Getter, Mutation, Action } from 'vuex-class';
 
   import { comparisonStore } from '@/store/modules/comparison';
   import { ConparisonConfig, ConparisonCharts } from '../components/comparison';
@@ -42,12 +42,14 @@
     @Getter('durationTime') private durationTime: any;
     @Mutation('SET_EVENTS') private SET_EVENTS: any;
     @Mutation('comparisonStore/SET_ISPREVIOUS') private SET_ISPREVIOUS: any;
+    @Action('SET_NEW_DURATION') private SET_NEW_DURATION: any;
 
     private beforeCreate() {
       this.$store.registerModule('comparisonStore', comparisonStore);
     }
 
     private beforeMount() {
+      this.SET_NEW_DURATION();
       this.$store.dispatch('comparisonStore/GET_SERVICES', {duration: this.durationTime});
       this.SET_EVENTS([this.reloadConfig]);
     }

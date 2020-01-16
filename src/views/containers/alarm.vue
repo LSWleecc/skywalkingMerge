@@ -39,6 +39,7 @@ import { State, Action, Getter } from 'vuex-class';
 export default class Alarm extends Vue {
   @State('rocketAlarm') private rocketAlarm!: any;
   @Getter('durationTime') private durationTime: any;
+  @Action('SET_NEW_DURATION') private SET_NEW_DURATION: any;
   @Prop({default: () => ({label: 'All', key: ''})})
   private alarmScope: any;
   @Prop({default: false, type: Boolean})
@@ -47,6 +48,9 @@ export default class Alarm extends Vue {
   private keyword!: string;
   private beforeCreate() {
     this.$store.registerModule('rocketAlarm', alarm);
+  }
+  private beforeMount() {
+      this.SET_NEW_DURATION();
   }
   private beforeDestroy() {
     this.$store.unregisterModule('rocketAlarm');

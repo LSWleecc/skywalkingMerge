@@ -26,11 +26,13 @@
     export default class callerAnalysis extends Vue {
         @State('callerStore') private callerStore!: any;
         @Mutation('SET_EVENTS') private SET_EVENTS: any;
+        @Action('SET_NEW_DURATION') private SET_NEW_DURATION: any;
         private beforeCreate() {
             this.$store.registerModule('callerStore', callerStore);
         }
         private beforeMount() {
-//            this.SET_EVENTS([]);
+            this.SET_NEW_DURATION();
+            this.SET_EVENTS([]);
         }
         private beforeDestroy() {
             this.$store.unregisterModule('callerStore');

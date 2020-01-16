@@ -43,6 +43,7 @@ export default class Trace extends Vue {
   @Mutation('SET_EVENTS') private SET_EVENTS: any;
   @Action('rocketTrace/GET_TRACELIST') private GET_TRACELIST: any;
   @Action('rocketTrace/GET_TRACE_SPANS') private GET_TRACE_SPANS: any;
+  @Action('SET_NEW_DURATION') private SET_NEW_DURATION: any;
 
 //  @Prop({default: {label: 'All', key: ''}})
 //  private service!: Option;
@@ -56,6 +57,7 @@ export default class Trace extends Vue {
   }
   private beforeMount() {
      this.SET_EVENTS([]);
+     this.SET_NEW_DURATION();
   }
   private beforeDestroy() {
     this.$store.unregisterModule('rocketTrace');

@@ -70,12 +70,18 @@ if (!window.Promise) { window.Promise = Promise; }
 
 Vue.config.productionTip = false;
 
-queryOAPTimeInfo().then(() => {
-  new Vue({
+// queryOAPTimeInfo().then(() => {
+//   new Vue({
+//     i18n,
+//     router,
+//     store,
+//     render: (h) => h(App),
+//   }).$mount('#app');
+// });
+
+new Vue({
     i18n,
     router,
     store,
     render: (h) => h(App),
   }).$mount('#app');
-});
-

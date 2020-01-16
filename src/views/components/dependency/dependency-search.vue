@@ -73,6 +73,8 @@
                             this.$eventBus.$emit('SET_DEPEND_LOADING_SHOW');
                         })
                     }
+                }).catch(() => {
+                    this.$eventBus.$emit('SET_DEPEND_LOADING_FALSE');
                 })
             });
         }
@@ -95,13 +97,13 @@
         private watchDurationTime(newValue: DurationTime, oldValue: DurationTime) {
             // Avoid repeating fetchData() after enter the component for the first time.
             if (compareObj(newValue, oldValue)) {
-                this.handleOption();
+                this.handleSearch();
             }
         }
 
         private mounted() {
             this.handleOption();
-            this.SET_EVENTS([this.handleSearch]);
+//            this.SET_EVENTS([this.handleSearch]);
         }
     }
 </script>

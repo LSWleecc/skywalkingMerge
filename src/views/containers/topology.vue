@@ -37,13 +37,16 @@ export default class Topology extends Vue {
   @Action('rocketTopo/GET_TOPO') private GET_TOPO: any;
   @Action('rocketTopo/CLEAR_TOPO') private CLEAR_TOPO: any;
   @Action('rocketTopo/CLEAR_TOPO_INFO') private CLEAR_TOPO_INFO: any;
+  @Action('SET_NEW_DURATION') private SET_NEW_DURATION: any;
   @Getter('durationTime') private durationTime: any;
 
   private beforeMount(): void {
-    this.SET_EVENTS([this.getTopo]);
+//    this.SET_EVENTS([this.getTopo]);
   }
   private mounted() {
+    this.SET_NEW_DURATION();
     this.getTopo();
+    this.SET_EVENTS([this.getTopo]);
   }
   private getTopo() {
     this.GET_TOPO({duration: this.durationTime});

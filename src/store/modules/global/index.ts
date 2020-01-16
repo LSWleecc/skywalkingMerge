@@ -196,7 +196,7 @@ const mutations: MutationTree<State> = {
 const actions: ActionTree<State, any> = {
   SET_NEW_DURATION(context: {commit: Commit, dispatch: Dispatch, getters: any}): void{
     const gap = context.getters.duration.end.getTime() - context.getters.duration.start.getTime();
-    const utcCopy: any = -(new Data().getTimezoneOffset() / 60);
+    const utcCopy: any = -(new Date().getTimezoneOffset() / 60);
     const time: Date[] = [new Date(new Date().getTime() - gap), new Date()]
     context.commit(types.SET_DURATION, timeFormat(time))
   },

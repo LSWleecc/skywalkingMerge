@@ -34,6 +34,7 @@
         @Action('callerStore/SELECT_ENDPOINT') private SELECT_ENDPOINT: any;
         @Mutation('callerStore/SET_DEFAULT_EMPTY_TRACE') private SET_DEFAULT_EMPTY_TRACE: any;
         @Mutation('callerStore/SET_CURRENT_TRACE') private SET_CURRENT_TRACE: any;
+        @Mutation('callerStore/SET_CALLER_LIST') private SET_CALLER_LIST: any;
         @Action('callerStore/MIXHANDLE_GET_OPTION') private MIXHANDLE_GET_OPTION: any;
         private handleRefresh() {
             return  this.GET_QUERY({
@@ -57,42 +58,54 @@
         }
         private handleSearch() {
 //            this.SET_DEFAULT_EMPTY_TRACE();
-            this.$eventBus.$emit('SET_INVOK_LOADING_HIDDEN');
+//            this.SET_CALLER_LIST([]);
 
-            this.$eventBus.$emit('SET_INVOK_LOADING_TRUE', () => {
+            this.$eventBus.$emit('SET_CALLER_LOADING_HIDDEN');
+
+            this.$eventBus.$emit('SET_CALLER_LOADING_TRUE', () => {
                 this.GET_INVOKLIST({
                     endpointId: this.callerStore.currentEndpoint.key,
                     duration: this.durationTime,
                     paging: {pageNum: 1, pageSize: 15, needTotal: true},
                     order: 'DES'
                 }).then(() => {
-                    this.$eventBus.$emit('SET_INVOK_LOADING_FALSE');
+                    this.$eventBus.$emit('SET_CALLER_LOADING_FALSE');
                     if(this.callerStore.currentTrace.id){
                         this.handleRefresh().then(() => {
-                            this.$eventBus.$emit('SET_INVOK_LOADING_SHOW');
+                            this.$eventBus.$emit('SET_CALLER_LOADING_SHOW');
                         })
                     }
                 }).catch(() => {
-                    this.$eventBus.$emit('SET_INVOK_LOADING_FALSE');
+                    this.$eventBus.$emit('SET_CALLER_LOADING_FALSE');
                 })
             })
         }
         private handleOption() {
             this.SET_DEFAULT_EMPTY_TRACE();
-            this.MIXHANDLE_GET_OPTION({duration: this.durationTime})
+            this.$eventBus.$emit('SET_CALLER_LOADING_TRUE', () => {
+                this.MIXHANDLE_GET_OPTION({duration: this.durationTime})
+                    .then(() => {
+                        this.$eventBus.$emit('SET_CALLER_LOADING_FALSE');
+                        if(this.callerStore.currentEndpoint.key) {
+                            this.handleSearch();
+                        }
+                    }).catch(() => {
+                    this.$eventBus.$emit('SET_CALLER_LOADING_FALSE');
+                })
+            });
         }
 
         @Watch('durationTime')
         private watchDurationTime(newValue: DurationTime, oldValue: DurationTime) {
             // Avoid repeating fetchData() after enter the component for the first time.
             if (compareObj(newValue, oldValue)) {
-                this.handleOption();
+                this.handleSearch();
             }
         }
 
         private mounted() {
             this.handleOption();
-            this.SET_EVENTS([this.handleSearch]);
+//            this.SET_EVENTS([this.handleSearch]);
 //            this.SET_EVENTS([]);
         }
     }

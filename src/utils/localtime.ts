@@ -35,7 +35,7 @@ export const queryOAPTimeInfo = async () => {
   if (!utc) {
     const res: AxiosResponse = await graph
       .query('queryOAPTimeInfo')
-      .params({});
+      .unTokenParams({});
     if (!res.data) {
       setTimezoneOffset();
     }

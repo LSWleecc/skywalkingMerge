@@ -31,7 +31,6 @@ export default {
       },
       set(val: Date[]) {
         const that: any = this;
-        console.log(val,'kkk')
         that.$store.dispatch('SET_DURATION', timeFormat(val));
       },
     },

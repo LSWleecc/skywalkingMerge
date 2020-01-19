@@ -69,19 +69,11 @@ const i18n = new VueI18n({
 if (!window.Promise) { window.Promise = Promise; }
 
 Vue.config.productionTip = false;
-
-// queryOAPTimeInfo().then(() => {
-//   new Vue({
-//     i18n,
-//     router,
-//     store,
-//     render: (h) => h(App),
-//   }).$mount('#app');
-// });
-
-new Vue({
+queryOAPTimeInfo().then(() => {
+  new Vue({
     i18n,
     router,
     store,
     render: (h) => h(App),
   }).$mount('#app');
+});

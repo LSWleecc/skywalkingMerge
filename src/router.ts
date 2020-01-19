@@ -98,16 +98,6 @@ router.beforeEach((to, from, next) => {
     }
     window.axiosCancel = [];
   }
-  // if (to.meta.login && (token === null || token === 'guest')) {
-  //   next();
-  // } else if (token === null || token === 'guest') {
-  //   next('/login');
-  // } else if (to.meta.login) {
-  //   next(from.path);
-  // } else {
-  //   next();
-  // }
-  next();
 });
 
 export default router;

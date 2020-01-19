@@ -25,7 +25,14 @@
             <div class="ell mb-5" :class="{
                 'blue':!i.isError,
                 'red':i.isError,
-                }" style="display: flex; justify-content: space-between"><span class="b">{{i.name}}</span><span class="rk-tag sm">{{i.value}}</span></div>
+                }" style="display: flex; justify-content: space-between">
+              <div style="width: 90%" class="ell">
+                <span class="b">{{i.name}}</span>
+              </div>
+              <div style="width: 10%">
+                <span class="rk-tag sm">{{i.value}}</span>
+              </div>
+            </div>
             <div class="grey ell sm"><span class="rk-tag mr-10 sm">{{i.serviceName}}</span></div>
           </td>
         </tr>
@@ -43,7 +50,7 @@
         @Mutation('DependTrace/SET_TRACE_FORM_ITEM') private SET_TRACE_FORM_ITEM: any;
         @Mutation('DependTrace/SET_CURRENT_TRACE') private SET_CURRENT_TRACE: any;
         @Mutation('DependTrace/SET_DEFAULT_EMPTY_TRACE') private SET_DEFAULT_EMPTY_TRACE: any;
-        @Action('DependTrace/GET_TRACELIST') private GET_TRACELIST: any;
+        @Action('DependTrace/GET_DEPENDENCY_LIST') private GET_DEPENDENCY_LIST: any;
         @Action('DependTrace/GET_QUERY') private GET_QUERY: any;
         @Getter('durationTime') private durationTime: any;
         private loading: boolean = false;
@@ -80,7 +87,7 @@
         private page(p: number) {
             this.loading = true;
             this.SET_TRACE_FORM_ITEM({type: 'paging', data: { pageNum: p, pageSize: 15, needTotal: true}});
-            this.GET_TRACELIST({
+            this.GET_DEPENDENCY_LIST({
                 endpointId: this.DependTrace.currentEndpoint.key,
                 duration: this.durationTime,
                 paging: {pageNum: p, pageSize: 15, needTotal: true},

@@ -36,12 +36,12 @@ class Graph {
     this.queryData = queryData;
     return this;
   }
-  // public params(variablesData: any): AxiosPromise<void> {
-  //   return axios.post('/graphql', {
-  //     query: query[this.queryData],
-  //     variables: variablesData,
-  //   }, { cancelToken: cancelToken() });
-  // }
+  public unTokenParams(variablesData: any): AxiosPromise<void> {
+    return axios.post('/graphql', {
+      query: query[this.queryData],
+      variables: variablesData,
+    }, { cancelToken: cancelToken() });
+  }
     public params(variablesData: any): AxiosPromise<void> {
         const data = {
             query: query[this.queryData],

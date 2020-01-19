@@ -20,7 +20,7 @@ export const endpointResponseTime =  {
   variable: ['$id: ID!', '$duration: Duration!'],
   fragment: `
   endpointResponseTime: getLinearIntValues(metric: {
-    name: "endpoint_relation_client_resp_time"
+    name: "endpoint_relation_server_resp_time"
     id: $id
   }, duration: $duration) {
     values {
@@ -34,7 +34,7 @@ export const endpointSLA =  {
   variable: ['$id: ID!', '$duration: Duration!'],
   fragment: `
   endpointSLA: getLinearIntValues(metric: {
-    name: "endpoint_relation_client_call_sla"
+    name: "endpoint_relation_server_call_sla"
     id: $id
   }, duration: $duration) {
     values {

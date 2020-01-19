@@ -21,7 +21,14 @@
             <div class="ell mb-5" :class="{
                 'blue':!i.isError,
                 'red':i.isError,
-                }" style="display: flex; justify-content: space-between"><span class="b">{{i.name}}</span><span class="rk-tag ms">{{i.value}}</span></div>
+                }" style="display: flex; justify-content: space-between">
+              <div style="width: 90%" class="ell">
+                <span class="b">{{i.name}}</span>
+              </div>
+              <div style="width: 10%">
+                <span class="rk-tag sm">{{i.value}}</span>
+              </div>
+            </div>
             <!--<div class="grey ell sm"><span class="rk-tag mr-10 sm">调用总次数：{{i.value}}</span></div>-->
           </td>
         </tr>

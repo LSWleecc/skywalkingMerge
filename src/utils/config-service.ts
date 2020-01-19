@@ -8,9 +8,8 @@ const service: any = axios.create({
 service.interceptors.request.use((config: any) => {
     const token = auth.getToken();
     if (token) {
-      // config.headers['Authorization'] = token;
+      config.headers['Authorization'] = token;
     }
-    config.headers['Authorization'] = 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3dXp6MTYiLCJhdXRob3JpdGllcyI6InVzZXIiLCJleHAiOjE1NzkyNDkxNzd9.tgXmUgXy-VIWSkFPNUTMRh0F_pwTzifpNKatfmSQoeEY3Rr1JhNo50Fqh7SVG0oGYfS1uo7vQ-muFL9W0nOQ3A';
   return config;
 }, (error: any) => {
   return  Promise.reject(error);

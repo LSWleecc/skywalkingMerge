@@ -29,6 +29,9 @@
           <use xlink:href="#spinner"></use>
         </svg>
       </div>
+
+      <div v-show="rocketTrace.traceList.length === 0 && !loading" style="text-align: center; margin: 10px">暂无数据</div>
+
       <div class="rk-trace-t-wrapper scroll_hide">
         <table class="rk-trace-t">
           <tr class="rk-trace-tr cp" v-for="(i, index) in rocketTrace.traceList" @click="selectTrace(i)" :key="index">

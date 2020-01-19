@@ -214,7 +214,6 @@ const actions: ActionTree<State, any> = {
     context.commit(types.SET_CURRENT_INSTANCE, params.instance ? params.instance : {});
   },
   MIXHANDLE_GET_OPTION(context: { commit: Commit, dispatch: Dispatch, state: State, getters: any }, params: any) {
-    console.log(params,'ppp')
     switch (params.compType) {
       case 'service':
         return context.dispatch('GET_SERVICES', {duration: params.duration})

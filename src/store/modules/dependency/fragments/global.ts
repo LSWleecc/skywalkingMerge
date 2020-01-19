@@ -19,7 +19,7 @@ export const globalPercent =  {
   variable: ['$duration: Duration!', '$id: ID!', '$valueCName: String'],
   fragment: `
   times: getLinearIntValues(metric: {
-    name: "endpoint_relation_client_resp_time"
+    name: "endpoint_relation_server_resp_time"
     id: $id
   }, duration: $duration, valueCName: $valueCName) { 
       values { 

@@ -80,24 +80,26 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    window.onmessage = (event: any) => {
-        if (event.source !== window.parent) {
-            return;
-        } else {
-            auth.saveToken(event.data);
-            router.isGoNext = true;
-            next()
-        }
-    };
-    if(router.isGoNext){
-        next()
-    }
+    // window.onmessage = (event: any) => {
+    //     if (event.source !== window.parent) {
+    //         return;
+    //     } else {
+    //         console.log('路由拦截')
+    //         auth.saveToken(event.data);
+    //         router.isGoNext = true;
+    //         next()
+    //     }
+    // };
+    // if(router.isGoNext){
+    //     next()
+    // }
   if (window.axiosCancel.length !== 0) {
     for (const func of  window.axiosCancel) {
       setTimeout(func(), 0);
     }
     window.axiosCancel = [];
   }
+  next();
 });
 
 export default router;

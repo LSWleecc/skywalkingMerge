@@ -35,6 +35,7 @@ import 'echarts/lib/chart/heatmap';
 import 'echarts/lib/chart/sankey';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/tooltip';
+import auth from '@/utils/auth';
 import VModal from 'vue-js-modal';
 import './assets';
 import ElementUI from 'element-ui';
@@ -69,11 +70,20 @@ const i18n = new VueI18n({
 if (!window.Promise) { window.Promise = Promise; }
 
 Vue.config.productionTip = false;
-queryOAPTimeInfo().then(() => {
-  new Vue({
-    i18n,
-    router,
-    store,
-    render: (h) => h(App),
-  }).$mount('#app');
-});
+
+window.onmessage = (event: any) => {
+    if (event.source !== window.parent) {
+        return;
+    } else {
+        auth.saveToken(event.data);
+        queryOAPTimeInfo().then(() => {
+            new Vue({
+                i18n,
+                router,
+                store,
+                render: (h) => h(App),
+            }).$mount('#app');
+        });
+    }
+};
+

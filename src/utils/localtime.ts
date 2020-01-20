@@ -17,6 +17,8 @@
 
 import graph from '@/graph';
 import { AxiosResponse } from 'axios';
+import auth from '@/utils/auth';
+import {async} from "q";
 
 const getLocalTime = (i: number, t: Date | number) => {
   const d = new Date(t);
@@ -30,18 +32,18 @@ const setTimezoneOffset = () => {
   window.localStorage.setItem('utc', -(new Date().getTimezoneOffset() / 60) + '');
 };
 
-export const queryOAPTimeInfo = async () => {
+export const queryOAPTimeInfo =async () => {
   let utc = window.localStorage.getItem('utc');
-  if (!utc) {
-    const res: AxiosResponse = await graph
-      .query('queryOAPTimeInfo')
-      .unTokenParams({});
-    if (!res.data) {
-      setTimezoneOffset();
+    if (!utc) {
+        const res: AxiosResponse = await graph
+            .query('queryOAPTimeInfo')
+            .params({});
+        if (!res.data) {
+            setTimezoneOffset();
+        }
+        utc = (res.data.data.getTimeInfo.timezone / 100) + '';
+        window.localStorage.setItem('utc', utc);
     }
-    utc = (res.data.data.getTimeInfo.timezone / 100) + '';
-    window.localStorage.setItem('utc', utc);
-  }
 };
 
 export default getLocalTime;

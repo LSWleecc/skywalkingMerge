@@ -72,7 +72,8 @@ export default [
     w: 3,
     h: '170',
   },
-  {
+
+  /*{
     o: 'ServiceInstance',
     d: 'instanceHeap',
     c: 'ChartLine',
@@ -135,5 +136,5 @@ export default [
     t: 'CLR HeapMemory (MB)',
     w: 3,
     h: 250,
-  },
+  },*/
 ];

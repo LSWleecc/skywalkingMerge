@@ -31,8 +31,8 @@
             this.$store.registerModule('callerStore', callerStore);
         }
         private beforeMount() {
-            this.SET_NEW_DURATION();
             this.SET_EVENTS([]);
+            this.SET_NEW_DURATION();
         }
         private beforeDestroy() {
             this.$store.unregisterModule('callerStore');

@@ -56,7 +56,6 @@ const getters = {
 // mutations
 const mutations: MutationTree<State> = {
     [types.SET_CALLER_ANALYSIS_SERVICE](state: State, data: Option[] ): void {
-        if (!data.length) { return; }
         state.services = data;
         if (!state.currentService.key && data.length) {
             state.currentService = data[0];
@@ -68,10 +67,9 @@ const mutations: MutationTree<State> = {
             state.currentEndpoint = {};
             return;
         }
-        state.currentEndpoint = data[0];
-        // if (!state.currentEndpoint.key && data.length ) {
-        //     state.currentEndpoint = data[0];
-        // }
+        if (!state.currentEndpoint.key && data.length ) {
+            state.currentEndpoint = data[0];
+        }
     },
     [types.SET_TRACE_FORM](state: State, data: any): void {
         state.traceForm = data;

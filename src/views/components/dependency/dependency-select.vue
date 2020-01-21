@@ -35,7 +35,10 @@
         </svg>
       </div>
       <div class="rk-trace-opt-wrapper scroll_hide">
-        <div class="rk-trace-opt ell" @click="handleSelect(i)" :class="{'active':i.key === value.key}" v-for="i in filterData" :key="i.key">{{i.label}}</div>
+        <!--<div class="rk-trace-opt ell" @click="handleSelect(i)" :class="{'active':i.key === value.key}" v-for="i in filterData" :key="i.key">{{i.label}}</div>-->
+        <el-tooltip class="item" v-for="i in filterData" :key="i.key" effect="dark" :content="i.label" placement="top">
+          <div class="rk-trace-opt ell" @click="handleSelect(i)" :class="{'active':i.key === value.key}">{{i.label}}</div>
+        </el-tooltip>
       </div>
     </div>
   </div>

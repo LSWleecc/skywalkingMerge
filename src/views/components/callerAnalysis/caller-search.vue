@@ -1,7 +1,7 @@
 <template>
   <div class="rk-trace-search">
     <div>
-      <a class="rk-trace-search-btn bg-blue r mr-10" @click="handleSearch">
+      <a class="rk-trace-search-btn bg-blue r mr-10" @click="handleOption">
         <svg class="icon mr-5 vm">
           <use xlink:href="#search"></use>
         </svg>
@@ -99,14 +99,13 @@
         private watchDurationTime(newValue: DurationTime, oldValue: DurationTime) {
             // Avoid repeating fetchData() after enter the component for the first time.
             if (compareObj(newValue, oldValue)) {
-                this.handleSearch();
+//                this.handleSearch();
             }
         }
 
         private mounted() {
             this.handleOption();
-//            this.SET_EVENTS([this.handleSearch]);
-//            this.SET_EVENTS([]);
+            this.SET_EVENTS([this.handleOption]);
         }
     }
 </script>

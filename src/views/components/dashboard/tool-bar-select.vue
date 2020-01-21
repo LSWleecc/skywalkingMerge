@@ -38,7 +38,10 @@
         </svg>
       </div>
       <div class="rk-dashboard-opt-wrapper scroll_hide">
-        <div class="rk-dashboard-opt ell" @click="handleSelect(i)" :class="{'active':i.key === current.key}" v-for="i in filterData" :key="i.key">{{i.label}}</div>
+        <!--<div class="rk-dashboard-opt ell" @click="handleSelect(i)" v-tooltip:top.ellipsis="i.label || ''" :class="{'active':i.key === current.key}" v-for="i in filterData" :key="i.key">{{i.label}}</div>-->
+        <el-tooltip class="item" v-for="i in filterData" :key="i.key" effect="dark" :content="i.label" placement="top">
+          <div class="rk-dashboard-opt ell" @click="handleSelect(i)" :class="{'active':i.key === current.key}">{{i.label}}</div>
+        </el-tooltip>
       </div>
     </div>
   </div>

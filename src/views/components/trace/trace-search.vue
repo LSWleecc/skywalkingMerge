@@ -176,8 +176,12 @@
       this.traceState = i;
     }
 
-    private getSearchList() {
+    private async getSearchList () {
         this.$eventBus.$emit('SET_LOADING_TRUE');
+        await this.GET_SERVICES({duration: this.durationTime});
+        if(this.rocketTrace.currentService && this.rocketTrace.currentService.key) {
+            this.GET_INSTANCES({duration: this.durationTime, serviceId: this.rocketTrace.currentService.key})
+        }
         const temp: any = {
             queryDuration: this.globalTimeFormat([
                 new Date(this.time[0].getTime() +
@@ -219,13 +223,9 @@
     }
 
     private async getTraceList () {
-        this.$eventBus.$emit('SET_LOADING_TRUE', async () => {
+        this.$eventBus.$emit('SET_LOADING_TRUE', () => {
             this.SET_TRACELIST([]);
             this.SET_TRACE_SPANS([]);
-            await this.GET_SERVICES({duration: this.durationTime});
-            if(this.rocketTrace.currentService && this.rocketTrace.currentService.key) {
-                this.GET_INSTANCES({duration: this.durationTime, serviceId: this.rocketTrace.currentService.key})
-            }
             this.getSearchList()
         });
     }

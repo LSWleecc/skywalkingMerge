@@ -17,9 +17,14 @@
 
 <template>
   <div class="rk-alarm flex-v">
-    <AlarmTool :durationTime="durationTime" :total="rocketAlarm.total" :alarmScope="alarmScope" :inTopo="inTopo" :prop-keyword="keyword"/>
-    <div style="flex-grow: 1;overflow: auto;height: 100%;">
+    <AlarmToolGroup :rocketComps="rocketAlarm"/>
+    <AlarmTool v-if="rocketAlarm.group===1" :durationTime="durationTime" :total="rocketAlarm.total" :alarmScope="alarmScope" :inTopo="inTopo" :prop-keyword="keyword"/>
+    <div v-if="rocketAlarm.group===1"  style="flex-grow: 1;overflow: auto;height: 100%;">
       <AlarmTable :data="rocketAlarm.alarmService"/>
+    </div>
+    <div class="rk-strategy" v-if="rocketAlarm.group===0">
+      <AlarmForm v-show="showForm"></AlarmForm>
+      <AlarmList v-show="!showForm"/>
     </div>
   </div>
 </template>
@@ -31,10 +36,13 @@ import alarm from '@/store/modules/alarm';
 import { Prop } from 'vue-property-decorator';
 import AlarmTool from '../components/alarm/alarm-tool.vue';
 import AlarmTable from '../components/alarm/alarm-table.vue';
+import AlarmToolGroup from '@/views/components/alarm/alarm-tool-group.vue';
+import AlarmList  from '@/views/components/alarm/alarm-strategy-list.vue';
+import AlarmForm  from '@/views/components/alarm/alarm-strategy-form.vue';
 import { State, Action, Getter } from 'vuex-class';
 
 @Component({
-  components: { AlarmTool, AlarmTable },
+  components: { AlarmTool, AlarmTable, AlarmToolGroup, AlarmList, AlarmForm },
 })
 export default class Alarm extends Vue {
   @State('rocketAlarm') private rocketAlarm!: any;
@@ -46,6 +54,7 @@ export default class Alarm extends Vue {
   private inTopo!: boolean;
   @Prop({default: ''})
   private keyword!: string;
+  private showForm: boolean = false;
   private beforeCreate() {
     this.$store.registerModule('rocketAlarm', alarm);
   }
@@ -54,15 +63,28 @@ export default class Alarm extends Vue {
   }
   private beforeDestroy() {
     this.$store.unregisterModule('rocketAlarm');
-
+  }
+  public created() {
+      this.$eventBus.$on('HIDDEN_STRATEGY_FORM', this, (i:any) => {
+          this.showForm = false
+      });
+      this.$eventBus.$on('SHOW_STRATEGY_FORM', this, (i:any) => {
+          this.showForm = true
+      });
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .rk-alarm {
   flex-grow: 1;
   height: 100%;
   min-height: 0;
+}
+.rk-strategy {
+  height:100%;
+  display: flex;
+  min-height: 0;
+  overflow: auto;
 }
 </style>

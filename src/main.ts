@@ -71,11 +71,10 @@ if (!window.Promise) { window.Promise = Promise; }
 
 Vue.config.productionTip = false;
 
-window.onmessage = (event: any) => {
-    if (event.source !== window.parent) {
-        return;
-    } else {
-        auth.saveToken(event.data);
+function addRemove(e) {
+    if(e.source != window.parent) return;
+    if(e.data) {
+        auth.saveToken(e.data);
         queryOAPTimeInfo().then(() => {
             new Vue({
                 i18n,
@@ -83,7 +82,12 @@ window.onmessage = (event: any) => {
                 store,
                 render: (h) => h(App),
             }).$mount('#app');
-        });
+        }).catch(() => {
+            return;
+        })
+    }else{
+        return;
     }
-};
-
+}
+window.removeEventListener('message',addRemove, false);
+window.addEventListener('message',addRemove, false);

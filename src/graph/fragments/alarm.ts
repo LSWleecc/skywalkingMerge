@@ -27,3 +27,114 @@ export const Alarm = {
       }
       total
     }`};
+export const MetricsAlarm = {
+    variable: '$scope: Scope, $serviceId: ID!, $paging:Pagination!, $disabled: Boolean',
+    query: `
+    searchMetricsAlarmRules(scope: $scope, serviceId: $serviceId, paging: $paging, disabled: $disabled) {
+      rules {
+        id
+        metricsName
+        scope
+        entityId
+        serviceId
+        threshold
+        op
+        period  
+        count
+        silencePeriod
+        message
+        includeError
+        disabled
+        notifySMS
+        notifyDisabled
+      }
+      total
+    }`};
+export const EventAlarm = {
+    variable: '$serviceId: ID!, $paging:Pagination!',
+    query: `
+    searchEventAlarmRules( serviceId: $serviceId, paging: $paging) {
+      items: rules{
+        id
+        eventKey
+        serviceId
+        silencePeriod
+        disabled
+        notifySMS
+        notifyDisabled
+      }
+      total
+    }`};
+export const MetricAlarm = {
+    variable: '$id: ID!',
+    query: `
+    searchEventAlarmRules(id: $id) {
+      rules: {
+        id
+        alarmRuleName
+        eventKey
+        serviceID
+        silencePeriod
+        disabled
+        notifySMS
+        notifyDisabled
+        createTime
+        lastUpdateTime
+      }
+      total
+    }`};
+export const CreateMetric = {
+    variable: '$metricsName: String!, $scope: Scope!, $entityId: String!, $serviceId: String!, $threshold: String, $op: String, $period: Int!, $count: Int!, $silencePeriod: Int!, $message: String, $includeError: Boolean, $disabled: Boolean, $notifySMS: Boolean, $notifyDisabled: Boolean',
+    query: `
+    createMetricsAlarmRule(metricsName: $metricsName, scope: $scope, entityId: $entityId, serviceId: $serviceId, threshold: $threshold, op: $op, period: $period ,count: $count, silencePeriod: $silencePeriod, message: $message, disabled: $disabled, notifyDisabled: $notifyDisabled, includeError: $includeError, notifySMS: $notifySMS) {
+      id
+      metricsName
+      scope
+      entityId
+      serviceId
+      threshold
+      op
+      period
+      count
+      silencePeriod
+      message
+      includeError
+      notifySMS
+    }`};
+export const getMetric = {
+    variable: '$id: ID!',
+    query: `
+    getMetricsAlarmRule(id: $id) {
+      id
+      metricsName
+      scope
+      entityId
+      serviceId
+      threshold
+      op
+      period
+      count
+      silencePeriod
+      message
+      includeError
+      notifySMS
+    }`};
+
+export const updateMetric = {
+    variable: '$id: ID!, $threshold: String, $op: String, $period: Int!, $count: Int!, $silencePeriod: Int!, $message: String, $includeError: Boolean, $disabled: Boolean, $notifySMS: Boolean, $notifyDisabled: Boolean',
+    query: `
+    updateMetricsAlarmRule(id: $id, threshold: $threshold, op: $op, period: $period ,count: $count, silencePeriod: $silencePeriod, message: $message, disabled: $disabled, notifyDisabled: $notifyDisabled, includeError: $includeError, notifySMS: $notifySMS) {
+      id
+      metricsName
+      scope
+      entityId
+      serviceId
+      threshold
+      op
+      period
+      count
+      silencePeriod
+      message
+      includeError
+      notifySMS
+    }`};

@@ -71,10 +71,10 @@ if (!window.Promise) { window.Promise = Promise; }
 
 Vue.config.productionTip = false;
 
-function addRemove(e) {
-    if(e.source != window.parent) return;
-    if(e.data) {
-        auth.saveToken(e.data);
+function addRemove(event: any) {
+    if(event.source != window.parent) return;
+    if(event.data) {
+        auth.saveToken(event.data);
         queryOAPTimeInfo().then(() => {
             new Vue({
                 i18n,

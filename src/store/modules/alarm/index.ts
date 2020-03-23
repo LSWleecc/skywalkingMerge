@@ -107,32 +107,12 @@ const actions: ActionTree<State, any> = {
               context.commit(types.SET_ALARM_STRATEGY_LIST, res.data.data.searchMetricsAlarmRules.rules);
           })
   },
-    /*SEARCH_EVENT_LIST(context: {commit: Commit}, params:any):Promise<void> {
-        return graph
-            .query('searchEventAlarmRules')
-            .params(params)
-            .then((res: AxiosResponse) => {
-                context.commit(types.SET_EVENT_ALARM_STRATEGY_LIST, res.data.data.searchEventAlarmRules);
-            })
-    },*/
-    GET_METRICS_ALARM_RULE(context: {commit: Commit}, params: any): Promise<void> {
-        return graph
-            .query('getMetricsAlarmRules')
-            .params(params)
-            .then((res: AxiosResponse) => {
-                context.commit(types.SET_METRICS_ALARM_RULE, [{key: '0', label: 'ResponseTime'},{key: '1', label: 'Throughput'},{key: '2', label: 'SLA'},{key: '4', label: 'serviceP99'},{key: '5', label: 'serviceP95'},{key: '6', label: 'serviceP90'},{key: '7', label: 'serviceP75'}]);
-            })
-            .catch(() => {
-                context.commit(types.SET_METRICS_ALARM_RULE, [{key: '0', label: 'ResponseTime'},{key: '1', label: 'Throughput'},{key: '2', label: 'SLA'},{key: '4', label: 'serviceP99'},{key: '5', label: 'serviceP95'},{key: '6', label: 'serviceP90'},{key: '7', label: 'serviceP75'}]);
-            })
-    },
     ADD_METRIC_ALARM_RULE(context: {commit: Commit, dispatch: Dispatch}, params: any): Promise<void> {
       return graph
           .query('createMetricsAlarmRule')
           .params(params)
           .then((res: AxiosResponse) => {
 
-            // context.commit(types.CREATE_METRIC_ALARM_RULE, res.data)
           })
     },
     GET_METRIC_ALARM_RULE(context: {commit: Commit, dispatch: Dispatch}, params: any): Promise<void> {
@@ -146,6 +126,86 @@ const actions: ActionTree<State, any> = {
     UPDATE_METRIC_ALARM_RULE(context: {commit: Commit, dispatch: Dispatch}, params: any): Promise<void> {
         return graph
             .query('updateMetricAlarmRule')
+            .params(params)
+            .then((res: AxiosResponse) => {
+
+            })
+    },
+    DEL_METRIC_ALARM_RULE(context: {commit: Commit}, params: any): Promise<void> {
+        return graph
+            .query('deleteMetricsAlarmRule')
+            .params(params)
+            .then((res: AxiosResponse) => {
+
+            })
+    },
+    SWITCH_METRIC_ALARM_RULE(context: {commit: Commit}, params: any): Promise<void>  {
+        return graph
+            .query('disableMetricsAlarmRule')
+            .params(params)
+            .then((res: AxiosResponse) => {
+
+            })
+    },
+    CREATE_EVENT_ALARM_RULE(context: {commit: Commit}, params: any): Promise<void> {
+        return graph
+            .query('createEventAlarmRule')
+            .params(params)
+            .then((res: AxiosResponse) => {
+
+            })
+    },
+    DEL_EVENT_ALARM_RULE(context: {commit: Commit}, params: any): Promise<void> {
+        return graph
+            .query('deleteEventAlarmRule')
+            .params(params)
+            .then((res: AxiosResponse) => {
+
+            })
+    },
+    SWITCH_EVENT_ALARM_RULE(context: {commit: Commit}, params: any): Promise<void>  {
+        return graph
+            .query('disableEventAlarmsRule')
+            .params(params)
+            .then((res: AxiosResponse) => {
+
+            })
+    },
+    UPDATE_EVENT_ALARM_RULE(context: {commit: Commit}, params: any): Promise<void> {
+        return graph
+            .query('updateEventAlarmRule')
+            .params(params)
+            .then((res: AxiosResponse) => {
+
+            })
+    },
+    LOAD_CHILD_NODE(context: {commit: Commit}, params: any): Promise<void> {
+        return graph
+            .query('loadTree')
+            .params(params)
+            .then((res: AxiosResponse) => {
+                params.resolve(res.data.data.searchEndpoint);
+            })
+    },
+    SWITCH_DISABLE_METRICS(context: {commit: Commit}, params: any): Promise<void> {
+        return graph
+            .query('disableMetricsAlarmRules')
+            .params(params)
+            .then((res: AxiosResponse) => {
+
+            })
+    },
+    SWITCH_METRICS_ALARM_RULES_SERVICES(context: {commit: Commit}, params: any): Promise<void> {
+        return graph
+            .query('disableMetricsAlarmRulesInService')
+            .params(params)
+            .then((res: AxiosResponse) => {
+
+            })
+    },
+    SWITCH_EVENT_ALARM_RULES_SERVICES(context: {commit: Commit}, params: any): Promise<void> {
+        return graph
+            .query('disableEventAlarmRulesInService')
             .params(params)
             .then((res: AxiosResponse) => {
 

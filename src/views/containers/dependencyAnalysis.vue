@@ -22,7 +22,7 @@
             DependDetail
         }
     })
-    export default class dependencyMap extends Vue {
+    export default class DependencyMap extends Vue {
         @State('DependTrace') private DependTrace!: any;
         @Mutation('SET_EVENTS') private SET_EVENTS: any;
         @Action('SET_NEW_DURATION') private SET_NEW_DURATION: any;

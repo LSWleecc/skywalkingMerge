@@ -28,9 +28,9 @@ export const Alarm = {
       total
     }`};
 export const MetricsAlarm = {
-    variable: '$scope: Scope, $serviceId: ID!, $paging:Pagination!, $disabled: Boolean',
+    variable: '$scope: Scope!, $entityId: ID!, $paging:Pagination!, $disabled: Boolean',
     query: `
-    searchMetricsAlarmRules(scope: $scope, serviceId: $serviceId, paging: $paging, disabled: $disabled) {
+    searchMetricsAlarmRules(scope: $scope, entityId: $entityId, paging: $paging, disabled: $disabled) {
       rules {
         id
         metricsName
@@ -50,43 +50,10 @@ export const MetricsAlarm = {
       }
       total
     }`};
-export const EventAlarm = {
-    variable: '$serviceId: ID!, $paging:Pagination!',
-    query: `
-    searchEventAlarmRules( serviceId: $serviceId, paging: $paging) {
-      items: rules{
-        id
-        eventKey
-        serviceId
-        silencePeriod
-        disabled
-        notifySMS
-        notifyDisabled
-      }
-      total
-    }`};
-export const MetricAlarm = {
-    variable: '$id: ID!',
-    query: `
-    searchEventAlarmRules(id: $id) {
-      rules: {
-        id
-        alarmRuleName
-        eventKey
-        serviceID
-        silencePeriod
-        disabled
-        notifySMS
-        notifyDisabled
-        createTime
-        lastUpdateTime
-      }
-      total
-    }`};
 export const CreateMetric = {
-    variable: '$metricsName: String!, $scope: Scope!, $entityId: String!, $serviceId: String!, $threshold: String, $op: String, $period: Int!, $count: Int!, $silencePeriod: Int!, $message: String, $includeError: Boolean, $disabled: Boolean, $notifySMS: Boolean, $notifyDisabled: Boolean',
+    variable: '$metricsName: String!, $scope: Scope!, $entityId: String!, $threshold: String, $op: String, $period: Int!, $count: Int!, $silencePeriod: Int!, $message: String, $includeError: Boolean, $disabled: Boolean, $notifySMS: Boolean, $notifyDisabled: Boolean',
     query: `
-    createMetricsAlarmRule(metricsName: $metricsName, scope: $scope, entityId: $entityId, serviceId: $serviceId, threshold: $threshold, op: $op, period: $period ,count: $count, silencePeriod: $silencePeriod, message: $message, disabled: $disabled, notifyDisabled: $notifyDisabled, includeError: $includeError, notifySMS: $notifySMS) {
+    createMetricsAlarmRule(metricsName: $metricsName, scope: $scope, entityId: $entityId, threshold: $threshold, op: $op, period: $period ,count: $count, silencePeriod: $silencePeriod, message: $message, disabled: $disabled, notifyDisabled: $notifyDisabled, includeError: $includeError, notifySMS: $notifySMS) {
       id
       metricsName
       scope
@@ -100,6 +67,7 @@ export const CreateMetric = {
       message
       includeError
       notifySMS
+      notifyDisabled
     }`};
 export const getMetric = {
     variable: '$id: ID!',
@@ -118,6 +86,7 @@ export const getMetric = {
       message
       includeError
       notifySMS
+      notifyDisabled
     }`};
 
 export const updateMetric = {
@@ -136,5 +105,79 @@ export const updateMetric = {
       silencePeriod
       message
       includeError
+      disabled
       notifySMS
+      notifyDisabled
+    }`};
+
+export const disableMetric = {
+    variable: '$id: ID!, $disabled: Boolean!',
+    query: `
+    disableMetricsAlarmRule(id: $id, disabled: $disabled) {
+      id
+      metricsName
+      scope
+      entityId
+      serviceId
+      threshold
+      op
+      period
+      count
+      silencePeriod
+      message
+      includeError
+      disabled
+      notifySMS
+      notifyDisabled
+    }`};
+export const createEvent = {
+    variable: '$eventKey: String!, $serviceId: String!, $silencePeriod: Int!, $disabled: Boolean',
+    query: `
+    createEventAlarmRule(eventKey: $eventKey, serviceId: $serviceId, silencePeriod: $silencePeriod, disabled: $disabled) {
+      id
+      eventKey
+      serviceId
+      silencePeriod
+      disabled
+      notifySMS
+      notifyDisabled
+    }`};
+
+export const disableEventAlarm = {
+    variable: '$id: ID!, $disabled: Boolean!',
+    query: `
+    disableEventAlarmRule(id: $id, disabled: $disabled) {
+      id
+      eventKey
+      serviceId
+      silencePeriod
+      disabled
+      notifySMS
+      notifyDisabled
+    }`};
+export const updateEvent = {
+    variable: '$id: ID!, $silencePeriod: Int!, $disabled: Boolean, $notifySMS: Boolean, $notifyDisabled: Boolean',
+    query: `
+    updateEventAlarmRule(id: $id, silencePeriod: $silencePeriod, disabled: $disabled, notifySMS: $notifySMS, notifyDisabled: $notifyDisabled) {
+      id
+      eventKey
+      serviceId
+      silencePeriod
+      disabled
+      notifySMS
+      notifyDisabled
+    }`};
+export const load = {
+    variable: '$serviceId: ID!, $keyword: String!',
+    query: `
+    searchEndpoint(serviceId: $serviceId, keyword: $keyword, limit: 100) {
+      key: id
+      label: name
+    }`};
+export const switchDisableMetric = {
+    variable: '$serviceId: ID!, $keyword: String!',
+    query: `
+    searchEndpoint(serviceId: $serviceId, keyword: $keyword, limit: 100) {
+      key: id
+      label: name
     }`};
